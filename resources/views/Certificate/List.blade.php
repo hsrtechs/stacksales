@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="col-lg-8 col-md-offset-2">
+        <div class="col-lg-10 col-md-offset-1">
             <h2>
                 Certificates
             </h2>
