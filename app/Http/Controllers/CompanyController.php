@@ -60,7 +60,7 @@ class CompanyController extends Controller
      */
     public function show(Company $Company)
     {
-        return view('Company.Certificates',['company' => $Company]);
+        return view('Company.Show',['company' => $Company]);
     }
 
     /**
@@ -82,19 +82,31 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $Company)
     {
-        //
+        $Company->name = $request->name;
+        $Company->internal_number = $request->in;
+        $Company->notes = $request->notes;
+
+        if($Company->saveOrFail())
+        {
+            return redirect()->route('Company.edit',$Company->id)->with('status', 'OK');
+        }
+        return redirect()->route('Company.edit',$Company->id)->with('status', 'Error');
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Company $Company
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Company $Company)
     {
-        //
+        $Company->delete();
+        return redirect()->route('Company.index');
     }
 }
