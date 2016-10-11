@@ -36,7 +36,6 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Certificate::class, function (Faker\Generator $faker) {
 
-    $cc = DB::table('certificate_categories')->select('id')->get();
     $c = DB::table('companies')->select('id')->get();
 
     return [
