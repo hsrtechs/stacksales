@@ -48,7 +48,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ action("CompanyController@create") }}">Create Company</a></li>
                         <li><a href="{{ action("CompanyController@index") }}">Companies List</a></li>
-                        <li><a href="{{ action("CertificateController@crate") }}">Create Certificate</a></li>
+                        <li><a href="{{ action("CertificateController@create") }}">Create Certificate</a></li>
                         <li><a href="{{ action("CertificateController@index") }}">Certificates List</a></li>
                     </ul>
 
