@@ -29,7 +29,6 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
         'internal_number' => $faker->unique()->randomNumber(6,true),
-        'certification' => $faker->userName,
         'notes' => $faker->realText()
     ];
 });
@@ -48,17 +47,6 @@ $factory->define(App\Certificate::class, function (Faker\Generator $faker) {
         'issue' => $faker->date(),
         'expiry' => $faker->date(),
         'status' => 1,
-        'certificate_categories_id' => $cc->random()->id ?: 1,
         'company_id' => $c->random()->id ?: 1,
-    ];
-});
-
-$factory->define(App\CertificateCategory::class, function (Faker\Generator $faker) {
-
-    $cc = DB::table('certificate_categories')->select('id');
-
-    return [
-        'name' => $faker->userName,
-        'info' => $faker->realText(),
     ];
 });
