@@ -16,7 +16,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $certificates = Certificate::all();
+        $certificates = Certificate::orderBy('expiry')->get();
         return view('Certificate.List',['certificates' => $certificates]);
     }
 
@@ -27,7 +27,7 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        //
+        return view("Certificate.Create");
     }
 
     /**
@@ -38,7 +38,24 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cert = new Certificate;
+        $cert->name = $request->name;
+        $cert->internal_number = $request->in;
+        $cert->role = $request->role;
+        $cert->info = $request->info;
+        $cert->issue = $request->issue;
+        $cert->expiry = $request->expiry;
+        $cert->status = true;
+        $cert->company_id = $request->id;
+        $cert->certificate_categories_id = $request->category_id;
+
+        if($cert->saveOrFail())
+        {
+            return redirect()->route('Certificate.create')->with('status', 'OK');
+        }
+        return redirect()->route('Certificate.create')->with('status', 'Error');
+
+
     }
 
     /**

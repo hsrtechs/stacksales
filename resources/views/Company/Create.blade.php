@@ -2,10 +2,15 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @if(session('status'))
+                <div class="alert alert-{{ session('status') == 'OK' ? 'success' : 'danger' }}">
+                    {{ session('status') == 'OK' ? 'Company Adder' : 'Something Went Wrong' }}
+                </div>
+            @endif
             <div class="col-md-6 col-md-offset-2">
                 <h2 class="text-center"><strong>Add a new Company</strong></h2>
                 <div class="clearfix"></div>
-                <form class="form-horizontal" method="post" action="{{ route('Company.update',$company->id) }}">
+                <form class="form-horizontal" method="post" action="{{ route('Company.store') }}">
                     <div class="form-group">
                         <label for="name" class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
@@ -33,7 +38,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-default">Sign in</button>
+                            <button type="submit" class="btn btn-default">Create</button>
                         </div>
                     </div>
                 </form>

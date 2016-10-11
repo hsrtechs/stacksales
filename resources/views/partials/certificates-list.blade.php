@@ -15,7 +15,7 @@
                 <td>{{ $certificate->role }}</td>
                 <td>{{ $certificate->name }}</td>
                 <td>{{ $certificate->issue->toDateString() }}</td>
-                <td>{{ $certificate->expiry->toDateString() }} ({{ $certificate->expiry->diffForHumans() }})</td>
+                <td class="{{ ($certificate->expiry->diffInDays(\Carbon\Carbon::now()) <= 90 || $certificate->expiry->lt(\Carbon\Carbon::now())) ? 'text-danger' : '' }}">{{ $certificate->expiry->toDateString() }} ({{ $certificate->expiry->diffForHumans() }})</td>
             </tr>
         @endforeach
     </tbody>

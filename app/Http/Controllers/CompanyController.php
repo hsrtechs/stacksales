@@ -16,7 +16,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::orderBy('id','desc')->get();
         return view('Company.Index',['companies' => $companies]);
     }
 
@@ -27,7 +27,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('Company.Create');
     }
 
     /**
@@ -38,7 +38,18 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = new Company;
+        $company->name = $request->name;
+        $company->internal_number = $request->in;
+        $company->certification = $request->certification;
+        $company->notes = $request->notes;
+
+        if($company->saveOrFail())
+        {
+            return redirect()->route('Company.create')->with('status', 'OK');
+        }
+        return redirect()->route('Company.create')->with('status', 'Error');
+
     }
 
     /**
