@@ -18,7 +18,6 @@ class CreateCertificatesTable extends Migration
             $table->integer('internal_number');
             $table->string('name');
             $table->string('role');
-            $table->integer('certificate_categories_id');
             $table->text('info');
             $table->date('issue');
             $table->date('expiry');
@@ -30,12 +29,6 @@ class CreateCertificatesTable extends Migration
                 ->references('id')
                 ->on('companies')
                 ->onDelete('cascade');
-
-            $table->foreign('certificate_categories_id')
-                ->references('id')
-                ->on('certificate_categories')
-                ->onDelete('cascade');
-
         });
     }
 
