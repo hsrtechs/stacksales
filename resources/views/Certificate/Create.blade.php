@@ -4,7 +4,7 @@
         <div class="row">
             @if(session('status'))
                 <div class="alert alert-{{ session('status') == 'OK' ? 'success' : 'danger' }}">
-                    {{ session('status') == 'OK' ? 'Company Adder' : 'Something Went Wrong' }}
+                    {{ session('status') == 'OK' ? 'Certificate Added' : 'Something Went Wrong' }}
                 </div>
             @endif
             <div class="col-md-6 col-md-offset-2">
