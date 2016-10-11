@@ -17,9 +17,9 @@
                     <tbody>
                         @foreach($companies as $company)
                             <tr>
-                                <td>#{{ $company->id }}</td>
-                                <td>#{{ $company->internal_number }}</td>
-                                <td>{{ $company->name }}</td>
+                                <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->id }}</a></td>
+                                <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->internal_number }}</a></td>
+                                <td><a href="{{ route('Company.show',$company->id) }}">{{ $company->name }}</a></td>
                                 <td>{{ $company->certification }}</td>
                                 <td>{{ $company->notes }}</td>
                                 <td>
