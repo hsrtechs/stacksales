@@ -41,7 +41,6 @@ class CompanyController extends Controller
         $company = new Company;
         $company->name = $request->name;
         $company->internal_number = $request->in;
-        $company->certification = $request->certification;
         $company->notes = $request->notes;
 
         if($company->saveOrFail())

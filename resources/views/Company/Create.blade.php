@@ -24,12 +24,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="certification" class="col-sm-4 control-label">Certification</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="certification" class="form-control" id="certification" placeholder="Certification" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="notes" class="col-sm-4 control-label">Notes</label>
                         <div class="col-sm-8">
                             <textarea id="notes" name="notes" cols="50" placeholder="Please enter notes about the company here." required></textarea>
