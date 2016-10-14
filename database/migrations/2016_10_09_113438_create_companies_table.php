@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('internal_number');
             $table->longText('notes');
+            $table->longText('qualification');
             $table->timestamps();
         });
     }

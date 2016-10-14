@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label for="level" class="col-sm-4 control-label">Level</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="name" name="qualification">
+                            <select class="form-control" id="level" name="qualification">
                                 @foreach(\App\QualificationLevel::all() as $levels)
                                     <option value="{{ $levels->id }}">{{ $levels->value }}</option>
                                 @endforeach
@@ -76,13 +76,27 @@
 @endsection
 @section('js')
     <script>
-        $("#qualification").change(function () {
+        $("#cat").change(function () {
+            var id = $("#cat option:selected").val();
+            $.post("{{ url('/Company/QualificationPost') }}/" + id, {
+                '_token': '{{ csrf_token() }}',
+            }, function (data, status) {
+                $("#qualification option").remove();
+                $.each(data, function (key, value) {
+                    console.log(value);
+                    $('#qualification').append($("<option></option>").attr("value", value.id).text(value.name));
+                });
+            });
+        });
+
+         $("#qualification").change(function () {
             var id = $("#qualification option:selected").val();
-            $.post("{{ url('/Company/QualificationPost') }}/"+id,{
+            $.post("{{ url('/Company/QualificationLevel') }}/"+id,{
                 '_token' : '{{ csrf_token() }}',
             },function  (data, status){
+                $("#level option").remove();
                 $.each(data, function (key, value) {
-                    $('#qualification').append($("<option></option>").attr("value", key).text(value));
+                    $('#level').append($("<option></option>").attr("value", value.id).text(value.value));
                 });
             });
 

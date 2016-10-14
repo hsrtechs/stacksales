@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Qualification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -42,6 +43,11 @@ class CompanyController extends Controller
         $company->name = $request->name;
         $company->internal_number = $request->in;
         $company->notes = $request->notes;
+        $company->qualification = json_encode([
+            'name' => $request->name,
+            'cat' => $request->cat,
+            'level' => $request->level,
+        ]);
 
         if($company->saveOrFail())
         {

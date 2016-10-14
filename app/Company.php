@@ -19,4 +19,9 @@ class Company extends Model
         return $this->internal_number;
     }
 
+    public function getQualificationAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 }
