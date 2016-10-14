@@ -44,7 +44,7 @@ class CompanyController extends Controller
         $company->internal_number = $request->in;
         $company->notes = $request->notes;
         $company->qualification = json_encode([
-            'name' => $request->name,
+            'name' => $request->qualification,
             'cat' => $request->cat,
             'level' => $request->level,
         ]);
