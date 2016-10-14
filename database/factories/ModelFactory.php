@@ -29,6 +29,11 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
         'internal_number' => $faker->unique()->randomNumber(6,true),
+        'qualification' => json_encode([
+            'name' => 1,
+            'cat' => 1,
+            'level' => 1,
+        ]),
         'notes' => $faker->realText()
     ];
 });
