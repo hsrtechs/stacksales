@@ -19,8 +19,4 @@ class Company extends Model
         return $this->internal_number;
     }
 
-    public function getCertAttribute()
-    {
-        return $this->certification;
-    }
 }

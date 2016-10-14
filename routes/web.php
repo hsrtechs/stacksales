@@ -22,6 +22,9 @@ Auth::routes();
 Route::resource('Company','CompanyController');
 Route::resource('Certificate','CertificateController');
 
+Route::post('/Company/QualificationPost/{id}',function (\App\QualificationCategory $id){
+    return response()->json($id->Qualifications->toArray());
+});
 //$c = (new \App\Certificate());
 //$d = $c->find(99);
 //$d->expiry = \Carbon\Carbon::now()->addWeek(15);
