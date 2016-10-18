@@ -21,6 +21,7 @@ class CreateCertificatesTable extends Migration
             $table->text('info');
             $table->date('issue');
             $table->date('expiry');
+            $table->date('renewal');
             $table->enum('status',[0,1]);
             $table->integer('company_id');
             $table->timestamps();
