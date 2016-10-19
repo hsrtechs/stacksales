@@ -39,18 +39,21 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 });
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-$factory->define(App\Certificate::class, function (Faker\Generator $faker) {
-
-    $c = DB::table('companies')->select('id')->get();
-
-    return [
-        'name' => $faker->userName,
-        'internal_number' => $faker->unique()->randomNumber(6,true),
-        'role' => $faker->userName,
-        'info' => $faker->realText(),
-        'issue' => $faker->date(),
-        'expiry' => $faker->date(),
-        'status' => 1,
-        'company_id' => $c->random()->id ?: 1,
-    ];
-});
+//$factory->define(App\Certificate::class, function (Faker\Generator $faker) {
+//
+//    $c = DB::table('companies')->select('id')->get();
+//
+//    return [
+//        'name' => $faker->userName,
+//        'internal_number' => $faker->unique()->randomNumber(6,true),
+//        'role' => $faker->userName,
+//        'info' => $faker->realText(),
+//        'issue' => $faker->date(),
+//        'expiry' => $faker->date(),
+//        'renewal' => \Carbon\Carbon::now()->addMonth(random_int(1,5)),
+//        'status' => 1,
+//        'category_id' => '1',
+//        'company_id' => $c->random()->id ?: 1,
+//    ];
+//});
+//

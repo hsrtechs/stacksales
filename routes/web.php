@@ -22,6 +22,10 @@ Auth::routes();
 Route::resource('Company','CompanyController');
 Route::resource('Certificate','CertificateController');
 
+Route::get('Certificate/create/{company?}','CertificateController@create')->name('Certificate.create.var');
+Route::get('Certificate/view/{data?}',"CertificateController@index")->name('Certificate.index.var');
+Route::get('Company/{Company}/{Certificate?}',"CompanyController@show")->name('Company.show.var');
+
 Route::post('/Company/QualificationPost/{id}',function (\App\QualificationCategory $id){
     return response()->json($id->Qualifications->toArray());
 });
@@ -29,7 +33,9 @@ Route::post('/Company/QualificationPost/{id}',function (\App\QualificationCatego
 Route::post('/Company/QualificationLevel/{id}',function (\App\Qualification $id){
     return response()->json($id->Levels->toArray());
 });
-//$c = (new \App\Certificate());
-//$d = $c->find(99);
-//$d->expiry = \Carbon\Carbon::now()->addWeek(15);
-//$d->save();
+
+Route::group([
+    'prefix' => 'download'
+],function (){
+    Route::post('certificates/{token}',"DownloadController@certificates");
+});

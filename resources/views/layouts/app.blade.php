@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Stack Sales') }}</title>
+    <title>{{ config('app.name', '企业资质证件维护') }}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,25 +39,25 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Stack Sales') }}
+                        {{ config('app.name') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ action("CompanyController@create") }}">Create Company</a></li>
-                        <li><a href="{{ action("CompanyController@index") }}">Companies List</a></li>
-                        <li><a href="{{ action("CertificateController@create") }}">Create Certificate</a></li>
-                        <li><a href="{{ action("CertificateController@index") }}">Certificates List</a></li>
+                        <li><a href="{{ action("CompanyController@create") }}">@lang('nav.company.create')</a></li>
+                        <li><a href="{{ action("CompanyController@index") }}">@lang('nav.company.list')</a></li>
+                        {{--<li><a href="{{ action("CertificateController@create") }}">@lang('nav.certificate.create')</a></li>--}}
+                        {{--<li><a href="{{ action("CertificateController@index") }}">@lang('nav.certificate.list')</a></li>--}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}">@lang('nav.auth.login')</a></li>
+                            <li><a href="{{ url('/register') }}">@lang('nav.auth.register')</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

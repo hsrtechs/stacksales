@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CertificateCategory;
 use App\Company;
 use App\Qualification;
 use Illuminate\Http\Request;
@@ -61,12 +62,18 @@ class CompanyController extends Controller
      * Display the specified resource.
      *
      * @param Company $Company
+     * @param CertificateCategory $Certificate
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function show(Company $Company)
+    public function show(Company $Company, $Certificate = NULL)
     {
-        return view('Company.Show',['company' => $Company]);
+        if(!is_null($Certificate))
+        {
+            if(!CertificateCategory::where('id','=',$Certificate)->count())
+                return abort(404);
+        }
+        return view('Company.Show',['company' => $Company,'Certificate' => $Certificate ?: false]);
     }
 
     /**

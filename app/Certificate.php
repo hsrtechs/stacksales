@@ -12,6 +12,8 @@ class Certificate extends Model
     protected $casts = [
         'issue' => 'date',
         'expiry' => 'date',
+        'renewal' => 'date',
+        'status' => 'boolean',
     ];
 
     public function getInAttribute()
@@ -19,8 +21,23 @@ class Certificate extends Model
         return $this->internal_number;
     }
 
-    function Company()
+    public function getStatusAttribute($value)
+    {
+        return $value == false ? 'Inactive' : 'Active';
+    }
+
+    public function Company()
     {
         return $this->belongsTo('App\Company');
+    }
+
+    public function Category()
+    {
+        return $this->belongsTo('App\CertificateCategory');
+    }
+
+    public function Levels()
+    {
+        return $this->belongsTo('App\CertificateLevel');
     }
 }

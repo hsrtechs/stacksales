@@ -26,23 +26,25 @@
                     <div class="form-group">
                         <label for="in" class="col-sm-4 control-label">Company</label>
                         <div class="col-sm-8">
-                            <select name="category_id" class="form-control">
+                            <select name="category_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>
                                 @foreach(\App\Company::all() as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    <option value="{{ $company->id }}"{{$company->id == $cid ? 'selected' : ''}}>{{ $company->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">Category</label>
+                        <label for="category_id" class="col-sm-4 control-label">Category</label>
                         <div class="col-sm-8">
-                            <select name="id" class="form-control">
-                                @foreach(\App\CertificateCategory::all() as $certificate_category)
-                                    <option value="{{ $certificate_category->id }}">{{ $certificate_category->name }}</option>
-                                @endforeach
+                            <select name="category_id" class="form-control" id="category_id">
+                                @for($x=1;$x<10;$x++)
+                                    <option value="{{ $x }}">Category - {{ $x }}</option>
+                                @endfor
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="role" class="col-sm-4 control-label">Role</label>
                         <div class="col-sm-8">
@@ -65,6 +67,12 @@
                         <label for="expiry" class="col-sm-4 control-label">Expiry Date</label>
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="expiry" id="expiry" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry" class="col-sm-4 control-label">Renewal Date</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" name="renew" id="expiry" required />
                         </div>
                     </div>
                     <div class="form-group">

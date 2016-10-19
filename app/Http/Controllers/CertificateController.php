@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Certificate;
+use App\Company;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,20 +16,31 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($data = NULL)
     {
-        $certificates = Certificate::orderBy('expiry')->get();
+        if(!empty($data))
+        {
+            switch($data)
+            {
+                case 'renewal': $certificates = Certificate::where('renewal','<=',Carbon::now()->addDays(90))->orderBy('expiry')->get();break;
+                case 'expiry': $certificates = Certificate::where('expiry','<=',Carbon::now()->addDays(90))->orderBy('expiry')->get();break;
+                default: return abort(404);
+            }
+        }else{
+            $certificates = Certificate::orderBy('expiry')->get();
+        }
         return view('Certificate.List',['certificates' => $certificates]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Company $company
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Company $company)
     {
-        return view("Certificate.Create");
+        return view("Certificate.Create",['cid' => $company->id ?: NULL]);
     }
 
     /**

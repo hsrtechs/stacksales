@@ -3,7 +3,7 @@
     <div class="container">
         <div class="col-lg-10 col-md-offset-1">
             <h2>
-                Certificates
+                证书
             </h2>
             @include('partials.certificates-list')
         </div>

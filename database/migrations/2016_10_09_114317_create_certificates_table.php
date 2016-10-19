@@ -24,6 +24,7 @@ class CreateCertificatesTable extends Migration
             $table->date('renewal');
             $table->enum('status',[0,1]);
             $table->integer('company_id');
+            $table->integer('category_id');
             $table->timestamps();
 
 //            $table->foreign('company_id')
