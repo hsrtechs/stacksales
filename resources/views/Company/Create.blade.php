@@ -8,30 +8,30 @@
                 </div>
             @endif
             <div class="col-md-6 col-md-offset-2">
-                <h2 class="text-center"><strong>添加新的公司</strong></h2>
+                <h2 class="text-center"><strong>@lang('company.create.head')</strong></h2>
                 <div class="clearfix"></div>
                 <form class="form-horizontal" method="post" action="{{ route('Company.store') }}">
                     <div class="form-group">
-                        <label for="name" class="col-sm-4 control-label">名称</label>
+                        <label for="name" class="col-sm-4 control-label">@lang('company.create.name.label')</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="企业名称" required>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="@lang('company.create.name.pl')" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">内部编码</label>
+                        <label for="in" class="col-sm-4 control-label">@lang('company.in')</label>
                         <div class="col-sm-8">
-                            <input type="text" name="in" class="form-control" id="in" placeholder="内部编码" required>
+                            <input type="text" name="in" class="form-control" id="in" placeholder="@lang('company.in')" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="notes" class="col-sm-4 control-label">备注</label>
+                        <label for="notes" class="col-sm-4 control-label">@lang('company.create.notes.label')</label>
                         <div class="col-sm-8">
-                            <textarea id="notes" name="notes" cols="50" placeholder="输入关于企业的备注信息" required></textarea>
+                            <textarea class="form-control" id="notes" name="notes" cols="50" placeholder="@lang('company.create.notes.pl')" required></textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="cat" class="col-sm-4 control-label">分类</label>
+                        <label for="cat" class="col-sm-4 control-label">@lang('company.create.category')</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="cat">
                                 @foreach(\App\QualificationCategory::all() as $category)
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="qualification" class="col-sm-4 control-label">资质信息</label>
+                        <label for="qualification" class="col-sm-4 control-label">@lang('company.create.qualification')</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="qualification" name="qualification">
                                 @foreach(\App\QualificationCategory::firstOrFail()->Qualifications as $qualification)
@@ -54,9 +54,9 @@
 
 
                     <div class="form-group">
-                        <label for="level" class="col-sm-4 control-label">等级</label>
+                        <label for="level" class="col-sm-4 control-label">@lang('company.create.levels')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="level" name="qualification">
+                            <select class="form-control" id="level" name="levels">
                                 @foreach(\App\QualificationLevel::all() as $levels)
                                     <option value="{{ $levels->id }}">{{ $levels->value }}</option>
                                 @endforeach
@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-default">创建</button>
+                            <button type="submit" class="btn btn-default">@lang('company.create.create')</button>
                         </div>
                     </div>
                 </form>

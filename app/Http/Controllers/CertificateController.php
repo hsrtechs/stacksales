@@ -59,8 +59,9 @@ class CertificateController extends Controller
         $cert->issue = $request->issue;
         $cert->expiry = $request->expiry;
         $cert->status = true;
-        $cert->company_id = $request->id;
-        $cert->certificate_categories_id = $request->category_id;
+        $cert->company_id = $request->company_id;
+        $cert->category_id = $request->category_id;
+        $cert->renewal = $request->renew;
 
         if($cert->saveOrFail())
         {

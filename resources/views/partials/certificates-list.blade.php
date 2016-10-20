@@ -20,7 +20,7 @@
                 <td>{{ $certificate->name }}</td>
                 <td>{{ $certificate->issue->toDateString() }}</td>
                 <td class="{{ ($certificate->expiry->diffInDays(\Carbon\Carbon::now()) <= 90 || $certificate->expiry->lt(\Carbon\Carbon::now())) ? 'text-danger' : '' }}">{{ $certificate->expiry->toDateString() }} ({{ $certificate->expiry->diffForHumans() }})</td>
-                <td class="{{ ($certificate->renewal->diffInDays(\Carbon\Carbon::now()) <= 90 || $certificate->expiry->lt(\Carbon\Carbon::now())) ? 'text-danger' : '' }}">{{ $certificate->expiry->toDateString() }} ({{ $certificate->renewal->diffForHumans() }})</td>
+                <td class="{{ ($certificate->renewal->diffInDays(\Carbon\Carbon::now()) <= 90 || $certificate->renewal->lt(\Carbon\Carbon::now())) ? 'text-danger' : '' }}">{{ $certificate->renewal->toDateString() }} ({{ $certificate->renewal->diffForHumans() }})</td>
                 <td>{{ $certificate->status }}</td>
                 <td style="min-width: 30px;">
                     <a href="{{ route('Certificate.edit',$certificate->id) }}">

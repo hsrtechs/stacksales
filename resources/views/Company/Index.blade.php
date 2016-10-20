@@ -7,6 +7,7 @@
                     <caption>@lang('company.list.company')</caption>
                     <thead>
                     <tr>
+                        <th>#@lang('company.id')</th>
                         <th>#@lang('company._in')</th>
                         <th>@lang('company.list.name')</th>
                     </tr>
@@ -14,6 +15,7 @@
                     <tbody>
                     @foreach($companies as $company)
                         <tr>
+                            <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->id }}</a></td>
                             <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->internal_number }}</a></td>
                             <td><a href="{{ route('Company.show',$company->id) }}">{{ $company->name }}</a></td>
                         </tr>

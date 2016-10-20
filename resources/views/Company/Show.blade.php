@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <h2>
-            {{ $company->name }}
+            {{ $company->name }} <a href="{{ route('Company.edit',$company->id) }}" class="btn btn-warning">Edit</a>
         </h2>
         <div class="row">
             <div class="col-md-8">
@@ -16,15 +16,10 @@
         <div class="row">
             <div class="col-md-2">
                 <ul class="list-group">
-                    @foreach($company->Certificates->groupBy('category-id') as $cert)
+                    @foreach($company->Certificates->groupBy('category_id') as $cert)
                         @foreach($cert as $cer)
                             <li class="list-group-item list-group-item{{ !empty($Certificate) && $cer->category_id == $Certificate ? '-success' : '' }}">
                                 <a href="{{ route('Company.show.var',[$company->id,$cer->category_id]) }}">{{ $cer->Category->name }}</a>
-                                {{--<ul class="list-group">--}}
-                                    {{--<li class="list-group-item">--}}
-                                        {{--<a href="">{{ $cer->name }}</a>--}}
-                                    {{--</li>--}}
-                                {{--</ul>--}}
                             </li>
                         @endforeach
                     @endforeach
@@ -47,13 +42,22 @@
                                     Export Data
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form">
-                                        <label for="pass">Password: </label>
-                                        <input id="pass" type="password" class="form-control" name="pass">
-
+                                    <p>Please enter password to encrypt the data.</p>
+                                    <form class="form" id="#export" method="post">
+                                        <div class="form-group">
+                                            <select name="type" class="form-control">
+                                                <option value="csv">Excel/CSV</option>
+                                                <option value="pdf">PDF</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="pass" type="password" class="form-control" placeholder="Password" name="pass">
+                                        </div>
                                     </form>
-                                    <button class="btn btn-primary" href="">CSV</button>
-                                    <button class="btn btn-primary">PDF</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" form="#export">Download</button>
                                 </div>
                             </div>
                         </div>

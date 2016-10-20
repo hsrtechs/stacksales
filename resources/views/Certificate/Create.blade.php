@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="in" class="col-sm-4 control-label">Company</label>
                         <div class="col-sm-8">
-                            <select name="category_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>
+                            <select name="company_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>
                                 @foreach(\App\Company::all() as $company)
                                     <option value="{{ $company->id }}"{{$company->id == $cid ? 'selected' : ''}}>{{ $company->name }}</option>
                                 @endforeach
@@ -51,10 +51,17 @@
                             <input type="text" name="role" class="form-control" id="role" placeholder="Role" required>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="dob" class="col-sm-4 control-label">DOB: </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" name="dob" id="dob" required />
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="info" class="col-sm-4 control-label">Info</label>
                         <div class="col-sm-8">
-                            <textarea id="info" name="info" cols="50" placeholder="Please enter info about the company here." required></textarea>
+                            <textarea id="info" name="info" cols="50" placeholder="Please enter info about the certificate here." required></textarea>
                         </div>
                     </div>
                     <div class="form-group">

@@ -8,32 +8,65 @@
                 </div>
             @endif
             <div class="col-md-6 col-md-offset-2">
-                <h2 class="text-center"><strong>Edit {{ $company->name }}</strong></h2>
+                <h2 class="text-center"><strong>Edit:</strong> {{ $company->name }}</h2>
                 <div class="clearfix"></div>
-                <form class="form-horizontal" method="post" action="{{ route('Company.update',$company->id) }}">
+                <form class="form-horizontal" method="post" action="{{ route('Company.store') }}">
                     <div class="form-group">
-                        <label for="name" class="col-sm-4 control-label">Name</label>
+                        <label for="name" class="col-sm-4 control-label">@lang('company.create.name.label')</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{ $company->name }}" required>
+                            <input type="text" name="name" value="{{ $company->name }}" class="form-control" id="name" placeholder="@lang('company.create.name.pl')" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">Internal Number</label>
+                        <label for="in" class="col-sm-4 control-label">@lang('company.in')</label>
                         <div class="col-sm-8">
-                            <input type="text" name="in" class="form-control" id="in" placeholder="Internal Number" value="{{ $company->in }}" required>
+                            <input type="text" name="in" value="{{ $company->in }}" class="form-control" id="in" placeholder="@lang('company.in')" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="notes" class="col-sm-4 control-label">Notes</label>
+                        <label for="notes" class="col-sm-4 control-label">@lang('company.create.notes.label')</label>
                         <div class="col-sm-8">
-                            <textarea id="notes" name="notes" cols="50" rows="6" placeholder="Please enter notes about the company here." required>{{ $company->notes }}</textarea>
+                            <textarea class="form-control" id="notes" name="notes" cols="50" placeholder="@lang('company.create.notes.pl')" required>{{ $company->notes }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cat" class="col-sm-4 control-label">@lang('company.create.category')</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="cat">
+                                @foreach(\App\QualificationCategory::all() as $category)
+                                    <option value="{{ $category->id }}"{{$company->qualification->cat == $category->id ? ' selected': ''}}>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="qualification" class="col-sm-4 control-label">@lang('company.create.qualification')</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="qualification" name="qualification">
+                                @foreach(\App\QualificationCategory::firstOrFail()->Qualifications as $qualification)
+                                    <option value="{{ $qualification->id }}"{{$company->qualification->name == $qualification->id ? ' selected': ''}}>{{ $qualification->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="level" class="col-sm-4 control-label">@lang('company.create.levels')</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="level" name="levels">
+                                @foreach(\App\QualificationLevel::all() as $levels)
+                                    <option value="{{ $levels->id }}"{{$company->qualification->level == $levels->id ? ' selected': ''}}>{{ $levels->value }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="PATCH">
-                            <button type="submit" class="btn btn-default">Edit</button>
+                            <button type="submit" class="btn btn-default">@lang('company.create.create')</button>
                         </div>
                     </div>
                 </form>

@@ -52,7 +52,7 @@ class CompanyController extends Controller
 
         if($company->saveOrFail())
         {
-            return redirect()->route('Company.create')->with('status', 'OK');
+            return redirect()->route('Company.show',$company->id)->with('status', 'OK');
         }
         return redirect()->route('Company.create')->with('status', 'Error');
 
@@ -97,15 +97,21 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $Company)
     {
-        $Company->name = $request->name;
-        $Company->internal_number = $request->in;
-        $Company->notes = $request->notes;
+        $company = new Company;
+        $company->name = $request->name;
+        $company->internal_number = $request->in;
+        $company->notes = $request->notes;
+        $company->qualification = json_encode([
+            'name' => $request->qualification,
+            'cat' => $request->cat,
+            'level' => $request->level,
+        ]);
 
-        if($Company->saveOrFail())
+        if($company->saveOrFail())
         {
-            return redirect()->route('Company.edit',$Company->id)->with('status', 'OK');
+            return redirect()->route('Company.show',$company->id)->with('status', 'OK');
         }
-        return redirect()->route('Company.edit',$Company->id)->with('status', 'Error');
+        return redirect()->route('Company.create')->with('status', 'Error');
 
 
     }
