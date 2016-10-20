@@ -33,11 +33,16 @@ class Certificate extends Model
 
     public function Category()
     {
-        return $this->belongsTo('App\CertificateCategory');
+        return $this->hasManyThrough('App\CertificateCategory','App\CertificateName');
     }
 
     public function Levels()
     {
-        return $this->belongsTo('App\CertificateLevel');
+        return $this->belongsTo('App\CertificateLevel','id');
+    }
+
+    public function Role()
+    {
+        return $this->hasManyThrough('App\CertificateName','App\CertificateLevel','certificate_name_id','id','certificate_level_id');
     }
 }

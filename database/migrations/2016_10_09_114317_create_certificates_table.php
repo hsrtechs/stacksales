@@ -17,14 +17,13 @@ class CreateCertificatesTable extends Migration
             $table->increments('id');
             $table->integer('internal_number');
             $table->string('name');
-            $table->string('role');
             $table->text('info');
             $table->date('issue');
             $table->date('expiry');
             $table->date('renewal');
             $table->enum('status',[0,1]);
             $table->integer('company_id');
-            $table->integer('category_id');
+            $table->integer('certificate_level_id');
             $table->timestamps();
 
 //            $table->foreign('company_id')

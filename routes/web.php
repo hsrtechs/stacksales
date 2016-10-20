@@ -24,7 +24,15 @@ Route::resource('Certificate','CertificateController');
 
 Route::get('Certificate/create/{company?}','CertificateController@create')->name('Certificate.create.var');
 Route::get('Certificate/view/{data?}',"CertificateController@index")->name('Certificate.index.var');
-Route::get('Company/{Company}/{Certificate?}',"CompanyController@show")->name('Company.show.var');
+Route::get('Company/{Company}/{Category?}/{CertificateName?}/{Level?}',"CompanyController@show")->name('Company.show.var');
+
+Route::post('/Certificate/Roles/{id}',function (\App\CertificateCategory $id){
+    return response()->json($id->Roles->toArray());
+});
+
+Route::post('Certificate/Level/{id}',function (\App\CertificateName $id){
+    return response()->json($id->Level()->get()->toArray());
+});
 
 Route::post('/Company/QualificationPost/{id}',function (\App\QualificationCategory $id){
     return response()->json($id->Qualifications->toArray());

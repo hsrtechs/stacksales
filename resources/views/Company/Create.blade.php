@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label for="cat" class="col-sm-4 control-label">@lang('company.create.category')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="cat">
+                            <select class="form-control" name="cat" id="cat">
                                 @foreach(\App\QualificationCategory::all() as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -101,5 +101,6 @@
             });
 
         });
+
     </script>
 @endsection

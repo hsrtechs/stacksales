@@ -14,19 +14,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-                <ul class="list-group">
-                    @foreach($company->Certificates->groupBy('category_id') as $cert)
-                        @foreach($cert as $cer)
-                            <li class="list-group-item list-group-item{{ !empty($Certificate) && $cer->category_id == $Certificate ? '-success' : '' }}">
-                                <a href="{{ route('Company.show.var',[$company->id,$cer->category_id]) }}">{{ $cer->Category->name }}</a>
-                            </li>
-                        @endforeach
-                    @endforeach
-                </ul>
+            <div class="col-md-3">
+                <div id="tree"></div>
             </div>
-            <div class="col-md-10">
-                @include('partials.certificates-list',['certificates' => !empty($Certificate) ? $company->Certificates()->where('category_id','=',$Certificate)->get() : $company->Certificates])
+            <div class="col-md-9">
+                @include('partials.certificates-list',['certificates' => !empty($Certificate) ? $company->Certificates()->where('certificate_category_id','=',$Certificate)->get() : $company->Certificates])
             </div>
         </div>
         <div class="row">
@@ -66,4 +58,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('headcss')
+    <link rel="stylesheet" type="text/css" href="/css/treeview.css" />
+@endsection
+@section('js')
+    <script src="/js/treeview.js"></script>
+    <script>
+        var tree = {!! $data !!};
+        $('#tree').treeview({data: tree});
+    </script>
 @endsection

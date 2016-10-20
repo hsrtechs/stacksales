@@ -14,18 +14,23 @@ return [
     */
 
     'in' => '编号',
+
     'head' => [
         'role' => '类型',
         'name' => '姓名',
         'status' => 'Status',
     ],
+
     'added' => "Certificate Added",
+
     'issue' => [
         'date' => '发证日期'
     ],
+
     'expiry' => [
         'date' => '到期日期'
     ],
+
     'renewal' => [
         'date' => 'Renewal Date',
     ],

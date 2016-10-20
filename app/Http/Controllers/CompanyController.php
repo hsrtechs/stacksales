@@ -8,6 +8,7 @@ use App\Qualification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -47,7 +48,7 @@ class CompanyController extends Controller
         $company->qualification = json_encode([
             'name' => $request->qualification,
             'cat' => $request->cat,
-            'level' => $request->level,
+            'level' => $request->levels,
         ]);
 
         if($company->saveOrFail())
@@ -66,14 +67,48 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function show(Company $Company, $Certificate = NULL)
+    public function show(Company $Company, $Category = NULL, $CertificateName = NULL , $Level = NULL)
     {
-        if(!is_null($Certificate))
+        if(!is_null($CertificateName))
         {
-            if(!CertificateCategory::where('id','=',$Certificate)->count())
+            if(!CertificateCategory::where('id','=',$CertificateName)->count())
                 return abort(404);
         }
-        return view('Company.Show',['company' => $Company,'Certificate' => $Certificate ?: false]);
+        $data = [];
+        foreach (DB::table('certificate_categories')->get() as $cc)
+        {
+            $cca = [
+                'text' => $cc->name,
+                'nodes' => [],
+                'href' => route('Company.show.var',[$cc->id]),
+            ];
+
+            foreach (DB::table('certificate_names')->where('certificate_category_id','=',$cc->id)->get() as $c)
+            {
+                $ca = [
+                    'text' => $c->name,
+                    'nodes' => [],
+                    'href' => route('Company.show.var',[$cc->id,$c->id]),
+                ];
+                foreach (DB::table('certificate_levels')->where('certificate_name_id','=',$c->id)->get() as $cl)
+                {
+                    $cla = [
+                        'text' => $cl->name,
+                        'href' => route('Company.show.var',[$cc->id,$c->id,$cl->id]),
+                    ];
+                    array_push($ca['nodes'],$cla);
+                }
+                array_push($cca['nodes'],$ca);
+            }
+            array_push($data,$cca);
+        }
+
+        if(is_null($Level))
+        {
+            $certificates = DB::table('certificates')->where('company_id',$Company->id)->where('certificate_level_id',$CertificateName)->get();
+        }
+
+        return view('Company.Show',['company' => $Company,'Certificate' => $CertificateName ?: false, 'Category' => $Category ?: false, 'Level' => $Level ?: false, 'data' => json_encode($data)]);
     }
 
     /**
