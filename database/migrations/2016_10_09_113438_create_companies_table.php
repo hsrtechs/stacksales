@@ -16,9 +16,9 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('internal_number');
             $table->longText('notes');
             $table->longText('qualification');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,7 +15,6 @@ class CreateCertificatesTable extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('internal_number');
             $table->string('name');
             $table->text('info');
             $table->date('issue');
@@ -25,6 +24,7 @@ class CreateCertificatesTable extends Migration
             $table->integer('company_id');
             $table->integer('certificate_level_id');
             $table->timestamps();
+            $table->softDeletes();
 
 //            $table->foreign('company_id')
 //                ->references('id')

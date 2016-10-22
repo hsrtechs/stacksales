@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Certificate extends Model
 {
+    use SoftDeletes;
 
     protected $appends = ['in'];
 
@@ -18,7 +20,7 @@ class Certificate extends Model
 
     public function getInAttribute()
     {
-        return $this->internal_number;
+        return $this->id;
     }
 
     public function getStatusAttribute($value)
@@ -33,16 +35,16 @@ class Certificate extends Model
 
     public function Category()
     {
-        return $this->hasManyThrough('App\CertificateCategory','App\CertificateName');
+        return $this->Role()->Category()->get();
     }
 
     public function Levels()
     {
-        return $this->belongsTo('App\CertificateLevel','id');
+        return $this->belongsTo('App\CertificateLevel','certificate_level_id');
     }
 
     public function Role()
     {
-        return $this->hasManyThrough('App\CertificateName','App\CertificateLevel','certificate_name_id','id','certificate_level_id');
+        return $this->Levels->Role;
     }
 }
