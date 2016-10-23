@@ -18,7 +18,7 @@
                 <div id="tree"></div>
             </div>
             <div class="col-md-9">
-                @include('partials.certificates-list',['certificates' => !empty($Certificate) ? $company->Certificates()->where('certificate_category_id','=',$Certificate)->get() : $company->Certificates])
+                @include('partials.certificates-list',['certificates' => $certificates])
             </div>
         </div>
         <div class="row">
@@ -61,9 +61,17 @@
 @endsection
 
 @section('headcss')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/css/treeview.css" />
 @endsection
 @section('js')
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        } );
+    </script>
+
     <script src="/js/treeview.js"></script>
     <script>
         var tree = {!! $data !!};

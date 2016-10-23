@@ -34,6 +34,7 @@ class LocalizationMiddleware
                 App::setLocale('cn');
             }
         }
+
         return $next($request);
     }
 }

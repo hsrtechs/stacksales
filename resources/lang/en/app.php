@@ -1,4 +1,4 @@
 <?php
 return [
-    'name' => 'Stack Sales',
+    'name' => 'Certificate Management',
 ];

@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Certificate;
 use App\CertificateCategory;
 use App\Company;
-use App\Qualification;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +48,6 @@ class CompanyController extends Controller
     {
         $company = new Company;
         $company->name = $request->name;
-        $company->internal_number = $request->in;
         $company->notes = $request->notes;
         $company->qualification = json_encode([
             'name' => $request->qualification,
@@ -63,8 +67,11 @@ class CompanyController extends Controller
      * Display the specified resource.
      *
      * @param Company $Company
-     * @param CertificateCategory $Certificate
+     * @param null $Category
+     * @param null $CertificateName
+     * @param null $Level
      * @return \Illuminate\Http\Response
+     * @internal param CertificateCategory $Certificate
      * @internal param int $id
      */
     public function show(Company $Company, $Category = NULL, $CertificateName = NULL , $Level = NULL)
@@ -79,22 +86,31 @@ class CompanyController extends Controller
         {
             $cca = [
                 'text' => $cc->name,
-                'nodes' => [],
                 'href' => route('Company.show.var',[$cc->id]),
+                'state' => [
+                    'selected' => ($cc->id == $Category) ? true : false
+                ],
+                'nodes' => [],
             ];
 
             foreach (DB::table('certificate_names')->where('certificate_category_id','=',$cc->id)->get() as $c)
             {
                 $ca = [
                     'text' => $c->name,
-                    'nodes' => [],
                     'href' => route('Company.show.var',[$cc->id,$c->id]),
+                    'state' => [
+                        'selected' => ($c->id == $CertificateName) ? true : false
+                    ],
+                    'nodes' => [],
                 ];
                 foreach (DB::table('certificate_levels')->where('certificate_name_id','=',$c->id)->get() as $cl)
                 {
                     $cla = [
                         'text' => $cl->name,
                         'href' => route('Company.show.var',[$cc->id,$c->id,$cl->id]),
+                        'state' => [
+                            'selected' => ($cl->id == $Level) ? true : false
+                        ],
                     ];
                     array_push($ca['nodes'],$cla);
                 }
@@ -103,12 +119,31 @@ class CompanyController extends Controller
             array_push($data,$cca);
         }
 
-        if(is_null($Level))
+        $certificates = Certificate::getAll();
+
+        if(!empty($Level))
         {
-            $certificates = DB::table('certificates')->where('company_id',$Company->id)->where('certificate_level_id',$CertificateName)->get();
+            $certificates = $certificates->where('certificate_categories.id',$Category)
+                ->where('certificate_levels.id','=',$Level)
+                ->where('certificate_names.id','=',$Level)
+                ->where('company_id','=',$Company)
+                ->getCertData();
+        }else if(!empty($CertificateName))
+        {
+            $certificates = $certificates->where('certificate_categories.id',$Category)
+                ->where('certificate_names.id', $CertificateName)
+                ->where('company_id','=',$Company->id)
+                ->getCertData();
+        }else if(!empty($Category))
+        {
+            $certificates = $certificates->where('certificate_categories.id',$Category)
+                ->where('company_id','=',$Company->id)
+                ->getCertData();
+        }else {
+            $certificates = $Company->certificates();
         }
 
-        return view('Company.Show',['company' => $Company,'Certificate' => $CertificateName ?: false, 'Category' => $Category ?: false, 'Level' => $Level ?: false, 'data' => json_encode($data)]);
+        return view('Company.Show',['company' => $Company, 'certificates' => $certificates->get(), 'data' => json_encode($data)]);
     }
 
     /**
@@ -134,7 +169,6 @@ class CompanyController extends Controller
     {
         $company = new Company;
         $company->name = $request->name;
-        $company->internal_number = $request->in;
         $company->notes = $request->notes;
         $company->qualification = json_encode([
             'name' => $request->qualification,

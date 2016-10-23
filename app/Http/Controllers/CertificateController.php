@@ -8,12 +8,20 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
+     * @param null $data
      * @return \Illuminate\Http\Response
      */
     public function index($data = NULL)
@@ -22,12 +30,13 @@ class CertificateController extends Controller
         {
             switch($data)
             {
-                case 'renewal': $certificates = Certificate::where('renewal','<=',Carbon::now()->addDays(90))->orderBy('expiry')->get();break;
-                case 'expiry': $certificates = Certificate::where('expiry','<=',Carbon::now()->addDays(90))->orderBy('expiry')->get();break;
+                case 'all' : $certificates = Certificate::active();break;
+                case 'renewal': $certificates = Certificate::active()->where('renewal','<=',Carbon::now()->addDays(90))->get();break;
+                case 'expired': $certificates = Certificate::where('expiry','<=',Carbon::now()->addDays(90))->get();break;
                 default: return abort(404);
             }
         }else{
-            $certificates = Certificate::orderBy('expiry')->get();
+            $certificates = Certificate::active()->get();
         }
         return view('Certificate.List',['certificates' => $certificates]);
     }
@@ -53,19 +62,17 @@ class CertificateController extends Controller
     {
         $cert = new Certificate;
         $cert->name = $request->name;
-        $cert->internal_number = $request->in;
-        $cert->role = $request->role;
+        $cert->certificate_level_id = $request->level;
         $cert->info = $request->info;
         $cert->issue = $request->issue;
         $cert->expiry = $request->expiry;
         $cert->status = true;
         $cert->company_id = $request->company_id;
-        $cert->category_id = $request->category_id;
         $cert->renewal = $request->renew;
 
         if($cert->saveOrFail())
         {
-            return redirect()->route('Certificate.create')->with('status', 'OK');
+            return redirect()->route('Company.show',$request->company_id)->with('status', 'OK');
         }
         return redirect()->route('Certificate.create')->with('status', 'Error');
 
@@ -86,34 +93,50 @@ class CertificateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param Certificate $Certificate
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Certificate $Certificate)
     {
-        //
+        return view("Certificate.Edit",['certificate' => $Certificate ?: NULL]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Certificate $Certificate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Certificate $Certificate)
     {
-        //
+        $Certificate->name = $request->name;
+        $Certificate->certificate_level_id = $request->level;
+        $Certificate->info = $request->info;
+        $Certificate->issue = $request->issue;
+        $Certificate->expiry = $request->expiry;
+        $Certificate->status = true;
+        $Certificate->renewal = $request->renew;
+
+        if($Certificate->saveOrFail())
+        {
+            return redirect()->route('Company.show',$request->company_id)->with('status', 'OK');
+        }
+        return redirect()->route('Certificate.create')->with('status', 'Error');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Certificate $Certificate
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Certificate $Certificate)
     {
-        //
+        $id = $Certificate->company_id;
+        $Certificate->delete();
+        return redirect()->route('Company.index',$id)->with('status', 'OK');
     }
 }

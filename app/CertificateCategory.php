@@ -10,4 +10,16 @@ class CertificateCategory extends Model
     {
         return $this->hasMany('App\CertificateName');
     }
+
+    public function Certificates()
+    {
+        $certs = collect();
+        foreach ($this->roles as $role)
+        {
+            $certs = $certs->merge(($role->Certificates()->toArray()));
+
+        }
+        return $certs;
+    }
+
 }

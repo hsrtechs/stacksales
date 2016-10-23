@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username','active',
     ];
 
     /**
@@ -26,4 +26,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $casts = [
+        'admin' => 'boolean',
+        'active' => 'boolean',
+    ];
+
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
+    public function isActive()
+    {
+        return $this->active;
+    }
 }

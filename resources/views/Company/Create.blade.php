@@ -18,12 +18,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">@lang('company.in')</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="in" class="form-control" id="in" placeholder="@lang('company.in')" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="notes" class="col-sm-4 control-label">@lang('company.create.notes.label')</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" id="notes" name="notes" cols="50" placeholder="@lang('company.create.notes.pl')" required></textarea>
@@ -56,7 +50,7 @@
                     <div class="form-group">
                         <label for="level" class="col-sm-4 control-label">@lang('company.create.levels')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="level" name="levels">
+                            <select class="form-control" id="level" name="levels" multiple>
                                 @foreach(\App\QualificationLevel::all() as $levels)
                                     <option value="{{ $levels->id }}">{{ $levels->value }}</option>
                                 @endforeach
@@ -74,7 +68,18 @@
         </div>
     </div>
 @endsection
+@section('headcss')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+
+
+@endsection
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+
+    <script>
+        $("#level").select2();
+    </script>
+
     <script>
         $("#cat").change(function () {
             var id = $("#cat option:selected").val();

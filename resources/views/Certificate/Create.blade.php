@@ -18,12 +18,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">Internal Number</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="in" class="form-control" id="in" placeholder="Internal Number" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="in" class="col-sm-4 control-label">Company</label>
                         <div class="col-sm-8">
                             <select name="company_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>
@@ -110,6 +104,8 @@
     </div>
 @endsection
 
+
+
 @section('js')
     <script>
         $("#cat").change(function () {
@@ -139,4 +135,4 @@
 
         });
     </script>
-    @endsection
+@endsection

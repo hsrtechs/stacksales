@@ -23,7 +23,8 @@ Route::resource('Company','CompanyController');
 Route::resource('Certificate','CertificateController');
 
 Route::get('Certificate/create/{company?}','CertificateController@create')->name('Certificate.create.var');
-Route::get('Certificate/view/{data?}',"CertificateController@index")->name('Certificate.index.var');
+Route::get('Certificate/view/{data}',"CertificateController@index")->name('Certificate.index.var');
+
 Route::get('Company/{Company}/{Category?}/{CertificateName?}/{Level?}',"CompanyController@show")->name('Company.show.var');
 
 Route::post('/Certificate/Roles/{id}',function (\App\CertificateCategory $id){

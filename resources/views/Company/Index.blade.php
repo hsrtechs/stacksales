@@ -8,7 +8,6 @@
                     <thead>
                     <tr>
                         <th>#@lang('company.id')</th>
-                        <th>#@lang('company._in')</th>
                         <th>@lang('company.list.name')</th>
                     </tr>
                     </thead>
@@ -16,7 +15,6 @@
                     @foreach($companies as $company)
                         <tr>
                             <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->id }}</a></td>
-                            <td><a href="{{ route('Company.show',$company->id) }}">#{{ $company->internal_number }}</a></td>
                             <td><a href="{{ route('Company.show',$company->id) }}">{{ $company->name }}</a></td>
                         </tr>
                     @endforeach
@@ -25,4 +23,18 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('headcss')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css">
+@endsection
+
+
+@section('js')
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        } );
+    </script>
 @endsection

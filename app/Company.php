@@ -11,7 +11,9 @@ class Company extends Model
 
     protected $appends = ['in','cert'];
 
-    public function Certificates()
+    protected $dates = ['deleted_at'];
+
+        public function Certificates()
     {
         return $this->hasMany('App\Certificate');
     }

@@ -28,7 +28,6 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->company,
-        'internal_number' => $faker->unique()->randomNumber(6,true),
         'qualification' => json_encode([
             'name' => 1,
             'cat' => 1,
@@ -42,15 +41,14 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 $factory->define(App\Certificate::class, function (Faker\Generator $faker) {
 
     $c = DB::table('companies')->select('id')->get();
-    $cn = DB::table('certificate_names')->select('id')->get();
+    $cn = DB::table('certificate_levels')->select('id')->get();
     return [
         'name' => $faker->userName,
-        'internal_number' => $faker->unique()->randomNumber(6,true),
         'info' => $faker->realText(),
         'issue' => $faker->date(),
         'expiry' => $faker->date(),
         'renewal' => \Carbon\Carbon::now()->addMonth(random_int(1,5)),
-        'status' => 1,
+        'status' => true,
         'certificate_level_id' => $cn->random()->id ?: 1,
         'company_id' => $c->random()->id ?: 1,
     ];

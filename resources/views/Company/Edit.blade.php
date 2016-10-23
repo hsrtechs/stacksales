@@ -18,12 +18,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">@lang('company.in')</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="in" value="{{ $company->in }}" class="form-control" id="in" placeholder="@lang('company.in')" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="notes" class="col-sm-4 control-label">@lang('company.create.notes.label')</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" id="notes" name="notes" cols="50" placeholder="@lang('company.create.notes.pl')" required>{{ $company->notes }}</textarea>
@@ -33,7 +27,7 @@
                     <div class="form-group">
                         <label for="cat" class="col-sm-4 control-label">@lang('company.create.category')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="cat">
+                            <select class="form-control" name="cat" id="cat">
                                 @foreach(\App\QualificationCategory::all() as $category)
                                     <option value="{{ $category->id }}"{{$company->qualification->cat == $category->id ? ' selected': ''}}>{{ $category->name }}</option>
                                 @endforeach
@@ -56,7 +50,7 @@
                     <div class="form-group">
                         <label for="level" class="col-sm-4 control-label">@lang('company.create.levels')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="level" name="levels">
+                            <select class="form-control" id="level" name="level">
                                 @foreach(\App\QualificationLevel::all() as $levels)
                                     <option value="{{ $levels->id }}"{{$company->qualification->level == $levels->id ? ' selected': ''}}>{{ $levels->value }}</option>
                                 @endforeach
@@ -66,7 +60,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-default">@lang('company.create.create')</button>
+                            <button type="submit" class="btn btn-default center-block">@lang('company.create.create')</button>
                         </div>
                     </div>
                 </form>

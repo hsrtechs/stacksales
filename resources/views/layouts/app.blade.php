@@ -8,14 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', '企业资质证件维护') }}</title>
+    <title>@lang('app.name')</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    {{--<link href="/css/app.css" rel="stylesheet">--}}
     @yield('headcss')
     <!-- Scripts -->
     <script>
@@ -40,18 +40,30 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name') }}
+                        @lang('app.name')
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
+                    @if (!Auth::guest())
                     <ul class="nav navbar-nav">
                         <li><a href="{{ action("CompanyController@create") }}">@lang('nav.company.create')</a></li>
                         <li><a href="{{ action("CompanyController@index") }}">@lang('nav.company.list')</a></li>
                         {{--<li><a href="{{ action("CertificateController@create") }}">@lang('nav.certificate.create')</a></li>--}}
-                        {{--<li><a href="{{ action("CertificateController@index") }}">@lang('nav.certificate.list')</a></li>--}}
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                @lang('nav.certificate.list')<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route("Certificate.index") }}">All Certificates</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'renewal') }}">Renewable Certificates</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'expired') }}">Canceled Certificate</a></li>
+                            </ul>
+                        </li>
+
                     </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -88,19 +100,12 @@
         @yield('content')
     </div>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    {{--<script src="/js/app.js"></script>--}}
 
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.table').DataTable();
-        } );
-    </script>
     @yield('js')
 </body>
 </html>
