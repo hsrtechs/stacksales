@@ -40,7 +40,6 @@
                                             <select name="type" class="form-control">
                                                 <option value="xls">Excel/xls</option>
                                                 <option value="csv">Excel/csv</option>
-                                                <option value="pdf">PDF</option>
                                             </select>
                                         </div>
                                         {{ csrf_field() }}
