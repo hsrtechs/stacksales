@@ -31,13 +31,14 @@ class CertificateController extends Controller
             switch($data)
             {
                 case 'all' : $certificates = Certificate::active();break;
-                case 'renewal': $certificates = Certificate::active()->where('renewal','<=',Carbon::now()->addDays(90))->get();break;
-                case 'expired': $certificates = Certificate::where('expiry','<=',Carbon::now()->addDays(90))->get();break;
+                case 'renewal': $certificates = Certificate::active()->where('renewal','<=',Carbon::now()->addDays(90));break;
+                case 'expired': $certificates = Certificate::where('expiry','<=',Carbon::now()->addDays(90));break;
                 default: return abort(404);
             }
         }else{
-            $certificates = Certificate::active()->get();
+            $certificates = Certificate::active();
         }
+        $certificates = $certificates->IncludeRole()->get();
         return view('Certificate.List',['certificates' => $certificates]);
     }
 
@@ -66,6 +67,7 @@ class CertificateController extends Controller
         $cert->info = $request->info;
         $cert->issue = $request->issue;
         $cert->expiry = $request->expiry;
+        $cert->dob = $request->dob;
         $cert->status = true;
         $cert->company_id = $request->company_id;
         $cert->renewal = $request->renew;
@@ -87,7 +89,7 @@ class CertificateController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect()->to('/Company');
     }
 
     /**
@@ -117,6 +119,7 @@ class CertificateController extends Controller
         $Certificate->info = $request->info;
         $Certificate->issue = $request->issue;
         $Certificate->expiry = $request->expiry;
+        $Certificate->dob = $request->dob;
         $Certificate->status = true;
         $Certificate->renewal = $request->renew;
 

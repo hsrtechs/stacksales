@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DownloadController extends Controller
 {
@@ -18,18 +19,38 @@ class DownloadController extends Controller
 
     public function certificates(Request $request, $token)
     {
-        if($token == csrf_token())
+        $ext = $request->type;
+        $name = trans('app.name').date('Y-m-d');
+        if($token == csrf_token() && $this->isAllowedExt($ext))
         {
-            $ext = 'csv';
-            $data = $request->data;
-            $name = trans('app.name').date('Y-m-d').'-company.'.$ext;
-            Storage::put($name,$data);
-            $path = storage_path($name);
-            $file = new File;
-            $file->path = $path;
-            $file->expiry = Carbon::now()->addHours(12);
-            $file->saveOrFail();
-            return $file;
-        }
+            return Excel::create($name,function ($excel) use ($request,$name){
+                $excel->setTitle($name);
+                $excel->setCreator($request->user()->username)
+                    ->setCompany(trans('app.name'))
+                    ->sheet('Certificates',function ($sheet) use ($request){
+                        $data = json_decode(urldecode($request->data),true);
+                        $d = [array_keys($data[0])];
+                        foreach ($data as $da)
+                        {
+                            $array = array_values($da);
+                            array_push($d,$array);
+                        }
+                        $sheet->fromArray($d);
+                    });
+            })->export($ext);
+        }else
+            return abort(403);
+    }
+
+    public function AllowedExt()
+    {
+        return [
+            'csv','xls'
+        ];
+    }
+
+    public function isAllowedExt($ext)
+    {
+        return in_array($ext,$this->AllowedExt());
     }
 }

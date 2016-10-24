@@ -47,6 +47,7 @@ $factory->define(App\Certificate::class, function (Faker\Generator $faker) {
         'info' => $faker->realText(),
         'issue' => $faker->date(),
         'expiry' => $faker->date(),
+        'dob' => $faker->date(),
         'renewal' => \Carbon\Carbon::now()->addMonth(random_int(1,5)),
         'status' => true,
         'certificate_level_id' => $cn->random()->id ?: 1,

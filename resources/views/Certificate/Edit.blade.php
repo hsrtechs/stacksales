@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label for="dob" class="col-sm-4 control-label">DOB: </label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" name="dob" id="dob" required />
+                            <input type="date" class="form-control" value="{{ $certificate->dob->toDateString() }}" name="dob" id="dob" required />
                         </div>
                     </div>
                     <div class="form-group">

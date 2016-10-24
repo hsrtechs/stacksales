@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Certificate;
 use App\CertificateCategory;
+use App\CertificateLevel;
+use App\CertificateName;
 use App\Company;
 use Illuminate\Http\Request;
 
@@ -76,19 +78,21 @@ class CompanyController extends Controller
      */
     public function show(Company $Company, $Category = NULL, $CertificateName = NULL , $Level = NULL)
     {
-        if(!is_null($CertificateName))
-        {
-            if(!CertificateCategory::where('id','=',$CertificateName)->count())
-                return abort(404);
-        }
+        if(!empty($Category) && !CertificateCategory::where('id',$Category)->count())
+            return abort(404);
+        if(!empty($CertificateName) && !CertificateName::where('id','=',$CertificateName)->count())
+            return abort(404);
+        if(!empty($Level) && !CertificateLevel::where('id','=',$Level)->count())
+            return abort(404);
         $data = [];
+
         foreach (DB::table('certificate_categories')->get() as $cc)
         {
             $cca = [
                 'text' => $cc->name,
-                'href' => route('Company.show.var',[$cc->id]),
+                'href' => route('Company.show.var',[$Company->id,$cc->id]),
                 'state' => [
-                    'selected' => ($cc->id == $Category) ? true : false
+                    'selected' => ($cc->id == $Category && empty($CertificateName)) ? true : false,
                 ],
                 'nodes' => [],
             ];
@@ -97,9 +101,9 @@ class CompanyController extends Controller
             {
                 $ca = [
                     'text' => $c->name,
-                    'href' => route('Company.show.var',[$cc->id,$c->id]),
+                    'href' => route('Company.show.var',[$Company->id,$cc->id,$c->id]),
                     'state' => [
-                        'selected' => ($c->id == $CertificateName) ? true : false
+                        'selected' => ($c->id == $CertificateName && empty($Level)) ? true : false,
                     ],
                     'nodes' => [],
                 ];
@@ -107,9 +111,10 @@ class CompanyController extends Controller
                 {
                     $cla = [
                         'text' => $cl->name,
-                        'href' => route('Company.show.var',[$cc->id,$c->id,$cl->id]),
+                        'href' => route('Company.show.var',[$Company->id,$cc->id,$c->id,$cl->id]),
                         'state' => [
-                            'selected' => ($cl->id == $Level) ? true : false
+                            'selected' => ($cl->id == $Level) ? true : false,
+                            'expanded' => ($cl->id == $Level) ? true : false,
                         ],
                     ];
                     array_push($ca['nodes'],$cla);
@@ -125,8 +130,8 @@ class CompanyController extends Controller
         {
             $certificates = $certificates->where('certificate_categories.id',$Category)
                 ->where('certificate_levels.id','=',$Level)
-                ->where('certificate_names.id','=',$Level)
-                ->where('company_id','=',$Company)
+                ->where('certificate_names.id','=',$CertificateName)
+                ->where('company_id','=',$Company->id)
                 ->getCertData();
         }else if(!empty($CertificateName))
         {
@@ -140,7 +145,7 @@ class CompanyController extends Controller
                 ->where('company_id','=',$Company->id)
                 ->getCertData();
         }else {
-            $certificates = $Company->certificates();
+            $certificates = $Company->certificates()->IncludeRole();
         }
 
         return view('Company.Show',['company' => $Company, 'certificates' => $certificates->get(), 'data' => json_encode($data)]);
@@ -161,9 +166,10 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Company $Company
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(Request $request, Company $Company)
     {

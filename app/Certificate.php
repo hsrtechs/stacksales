@@ -17,6 +17,7 @@ class Certificate extends Model
         'issue' => 'date',
         'expiry' => 'date',
         'renewal' => 'date',
+        'dob' => 'date',
         'status' => 'boolean',
     ];
 
@@ -78,4 +79,10 @@ class Certificate extends Model
         return $query->select('certificates.*','certificate_categories.name as category','certificate_names.name as roles');
     }
 
+    public function scopeIncludeRole($query)
+    {
+        return $query->join('certificate_levels','certificates.certificate_level_id','=','certificate_levels.id')
+            ->join('certificate_names','certificate_names.id','certificate_levels.certificate_name_id')
+            ->select('certificates.*','certificate_names.name as role','certificate_levels.name as level');
+    }
 }

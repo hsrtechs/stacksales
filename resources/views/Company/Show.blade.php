@@ -35,16 +35,16 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Please enter password to encrypt the data.</p>
-                                    <form class="form" id="#export" method="post">
+                                    <form class="form" id="#export" method="get" action="{{ route('Certificate.download',csrf_token()) }}" target="_blank">
                                         <div class="form-group">
                                             <select name="type" class="form-control">
-                                                <option value="csv">Excel/CSV</option>
+                                                <option value="xls">Excel/xls</option>
+                                                <option value="csv">Excel/csv</option>
                                                 <option value="pdf">PDF</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <input id="pass" type="password" class="form-control" placeholder="Password" name="pass">
-                                        </div>
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="{!! urlencode(json_encode($certificates)) !!}" name="data">
                                     </form>
                                 </div>
                                 <div class="modal-footer">

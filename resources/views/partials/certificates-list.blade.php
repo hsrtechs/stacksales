@@ -15,8 +15,8 @@
     <tbody>
         @foreach($certificates as $certificate)
             <tr>
-                <td class="text-center"><a href="{{ route('Certificate.show',$certificate->id) }}">#{{ $certificate->in }}</a></td>
-                <td>{{ count($certificate->Role()) > 0 ? $certificate->Role()->name : '' }}</td>
+                <td class="text-center">#{{ $certificate->in }}</td>
+                <td>{{ $certificate->role }}</td>
                 <td>{{ $certificate->name }}</td>
                 <td>{{ $certificate->issue->toDateString() }}</td>
                 <td class="{{ ($certificate->expiry->diffInDays(\Carbon\Carbon::now()) <= 90 || $certificate->expiry->lt(\Carbon\Carbon::now())) ? 'text-danger' : '' }}">{{ $certificate->expiry->toDateString() }} ({{ $certificate->expiry->diffForHumans() }})</td>
@@ -27,7 +27,7 @@
                         <i class="glyphicon glyphicon-edit" title="Edit"></i>
                     </a>
 
-                    <a href="{{ route('Certificate.destroy',$certificate->id) }}">
+                    <a href="{{ route('Certificate.delete',$certificate->id) }}">
                         <i class="glyphicon glyphicon-open"></i>
                     </a>
                 </td>

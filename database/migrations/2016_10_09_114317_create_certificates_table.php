@@ -20,6 +20,7 @@ class CreateCertificatesTable extends Migration
             $table->date('issue');
             $table->date('expiry');
             $table->date('renewal');
+            $table->date('dob');
             $table->boolean('status');
             $table->integer('company_id');
             $table->integer('certificate_level_id');
