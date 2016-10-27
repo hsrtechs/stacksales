@@ -29,10 +29,24 @@ class DownloadController extends Controller
                     ->setCompany(trans('app.name'))
                     ->sheet('Certificates',function ($sheet) use ($request){
                         $data = json_decode(urldecode($request->data),true);
-                        $d = [array_keys($data[0])];
+
+                        $keys = array_keys($data[0]);
+                        $d = [[
+                            'Name','Gender','DoB','ID Card No.','Issue Date','Expiry Date','Renewal Date','Certificate','Info'
+                        ]];
                         foreach ($data as $da)
                         {
-                            $array = array_values($da);
+                            $array = [
+                                $da['name'],
+                                $da['gender'] == true ? 'Male' : 'Female',
+                                $da['dob'],
+                                $da['id_no'],
+                                $da['issue'],
+                                $da['expiry'],
+                                $da['renewal'],
+                                $da['role'],
+                                $da['info'],
+                            ];
                             array_push($d,$array);
                         }
                         $sheet->fromArray($d);

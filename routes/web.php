@@ -36,23 +36,29 @@ Route::get('Company/{Company}/{Category?}/{CertificateName?}/{Level?}',"CompanyC
 
 Route::post('/Certificate/Roles/{id}',function (\App\CertificateCategory $id){
     return response()->json($id->Roles->toArray());
-})->middleware('auth');
+});
 
 Route::post('Certificate/Level/{id}',function (\App\CertificateName $id){
-    return response()->json($id->Level()->get()->toArray());
-})->middleware('auth');
+    return response()->json($id->Levels()->get()->toArray());
+});
 
 Route::post('/Company/QualificationPost/{id}',function (\App\QualificationCategory $id){
-    return response()->json($id->Qualifications->toArray());
-})->middleware('auth');
+    return response()->json($id->Qualifications()->get()->toArray());
+});
 
 Route::post('/Company/QualificationLevel/{id}',function (\App\Qualification $id){
-    return response()->json($id->Levels->toArray());
-})->middleware('auth');
+    return response()->json($id->Levels()->get()->toArray());
+});
 
 
 Route::group([
     'prefix' => 'download'
 ],function (){
     Route::get('certificates/{token}',"DownloadController@certificates")->name('Certificate.download');
+});
+
+Route::group([
+    'prefix' => 'upload',
+],function (){
+    Route::post('Certificate/{token}','ImportController@Certificate')->name('Certificate.upload');
 });

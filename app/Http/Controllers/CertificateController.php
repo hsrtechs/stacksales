@@ -64,11 +64,13 @@ class CertificateController extends Controller
         $cert = new Certificate;
         $cert->name = $request->name;
         $cert->certificate_level_id = $request->level;
+        $cert->id_no = $request->idno;
         $cert->info = $request->info;
         $cert->issue = $request->issue;
         $cert->expiry = $request->expiry;
         $cert->dob = $request->dob;
         $cert->status = true;
+        $cert->status = $request->gender == 'Male' ? true : false;
         $cert->company_id = $request->company_id;
         $cert->renewal = $request->renew;
 

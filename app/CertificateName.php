@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CertificateName extends Model
 {
+    protected $fillable = ['id_no'];
+
     public function Category()
     {
         return $this->belongsTo('App\CertificateCategory','certificate_category_id');

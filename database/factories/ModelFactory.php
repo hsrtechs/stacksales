@@ -31,7 +31,7 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
         'qualification' => json_encode([
             'name' => 1,
             'cat' => 1,
-            'level' => 1,
+            'level' => [1],
         ]),
         'notes' => $faker->realText()
     ];
@@ -44,6 +44,8 @@ $factory->define(App\Certificate::class, function (Faker\Generator $faker) {
     $cn = DB::table('certificate_levels')->select('id')->get();
     return [
         'name' => $faker->userName,
+        'gender' => true,
+        'id_no' => random_int(1000,10000),
         'info' => $faker->realText(),
         'issue' => $faker->date(),
         'expiry' => $faker->date(),

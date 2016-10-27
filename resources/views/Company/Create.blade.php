@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label for="level" class="col-sm-4 control-label">@lang('company.create.levels')</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="level" name="levels" multiple>
+                            <select class="form-control" id="level" name="levels[]" multiple>
                                 @foreach(\App\QualificationLevel::all() as $levels)
                                     <option value="{{ $levels->id }}">{{ $levels->value }}</option>
                                 @endforeach

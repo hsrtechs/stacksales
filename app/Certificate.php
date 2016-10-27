@@ -11,6 +11,7 @@ class Certificate extends Model
 
     protected $appends = ['in'];
 
+    protected $fillable = ['id_no'];
     protected $dates = ['deleted_at'];
 
     protected $casts = [
@@ -19,6 +20,7 @@ class Certificate extends Model
         'renewal' => 'date',
         'dob' => 'date',
         'status' => 'boolean',
+        'gender' => 'boolean',
     ];
 
     public function getInAttribute()

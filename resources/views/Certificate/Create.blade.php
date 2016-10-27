@@ -18,16 +18,44 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="in" class="col-sm-4 control-label">Company</label>
-                        <div class="col-sm-8">
-                            <select name="company_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>
-                                @foreach(\App\Company::all() as $company)
-                                    <option value="{{ $company->id }}"{{$company->id == $cid ? 'selected' : ''}}>{{ $company->name }}</option>
-                                @endforeach
-                            </select>
+                        <label for="name" class="col-sm-4 control-label">Gender</label>
+                        <div class="col-sm-8 radio">
+                            <label class="radio-inline">
+                                <input type="radio" value="Male" name="gender" required>
+                                Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" value="female" name="gender" required>
+                                Female
+                            </label>
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="dob" class="col-sm-4 control-label">DOB: </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" name="dob" id="dob" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_no" class="col-sm-4 control-label">Identification: </label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="idno" id="id_no" required />
+                        </div>
+                    </div>
+
+                    {{--<div class="form-group">--}}
+                        {{--<label for="in" class="col-sm-4 control-label">Company</label>--}}
+                        {{--<div class="col-sm-8">--}}
+                            {{--<select name="company_id" class="form-control"{{ !empty($cid) ? ' readonly' : '' }}>--}}
+                                {{--@foreach(\App\Company::all() as $company)--}}
+                                    {{--<option value="{{ $company->id }}"{{$company->id == $cid ? 'selected' : ''}}>{{ $company->name }}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    <input type="hidden" value="{{ $cid }}" name="company_id">
                     <div class="form-group">
                         <label for="cat" class="col-sm-4 control-label">Category</label>
                         <div class="col-sm-8">
@@ -59,13 +87,6 @@
                                     <option value="{{ $level->id }}">{{ $level->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dob" class="col-sm-4 control-label">DOB: </label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control" name="dob" id="dob" required />
                         </div>
                     </div>
                     <div class="form-group">

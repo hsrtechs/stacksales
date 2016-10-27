@@ -4,9 +4,16 @@
         <h2>
             {{ $company->name }} <a href="{{ route('Company.edit',$company->id) }}" class="btn btn-warning">Edit</a>
         </h2>
+        @if(session('msg'))
+            <div class="alert alert-{{ session('status') == 'Ok' ? 'success' : 'danger' }}">
+                <p class="text-center">{{ session('msg') }}</p>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <p><strong>@lang('company.in')：</strong> {{ $company->in }}</p>
+                <p><strong>@lang('company.create.category')：</strong> {!! $company->category !!}</p>
+                <p><strong>@lang('company.create.levels')：</strong> {!! $company->level !!}</p>
                 <p><strong>@lang('company.notes')：</strong> {{ $company->notes }}</p>
             </div>
             <div class="col-md-4">
@@ -19,41 +26,7 @@
             </div>
             <div class="col-md-9">
                 @include('partials.certificates-list',['certificates' => $certificates])
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10">
-                <p class="text-center">
-                    <!-- Small modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">Import</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".import-model">Export</button>
-                    <div class="modal fade import-model" tabindex="-1" role="dialog" aria-labelledby="Import">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    Export Data
-                                </div>
-                                <div class="modal-body">
-                                    <p>Please enter password to encrypt the data.</p>
-                                    <form class="form" id="#export" method="get" action="{{ route('Certificate.download',csrf_token()) }}" target="_blank">
-                                        <div class="form-group">
-                                            <select name="type" class="form-control">
-                                                <option value="xls">Excel/xls</option>
-                                                <option value="csv">Excel/csv</option>
-                                            </select>
-                                        </div>
-                                        {{ csrf_field() }}
-                                        <input type="hidden" value="{!! urlencode(json_encode($certificates)) !!}" name="data">
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" form="#export">Download</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </p>
+                @include('partials.certificates-import')
             </div>
         </div>
     </div>
