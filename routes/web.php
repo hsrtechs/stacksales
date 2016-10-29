@@ -60,5 +60,13 @@ Route::group([
 Route::group([
     'prefix' => 'upload',
 ],function (){
-    Route::post('Certificate/{token}','ImportController@Certificate')->name('Certificate.upload');
+    Route::post('Certificate/{company}/{token}','ImportController@Certificate')->name('Certificate.upload');
+});
+
+Route::get('lang/{lang}',function ($lang){
+    $allowed = ['en','cn'];
+    if(!in_array($lang,$allowed))
+        abort(404);
+    session()->put('local',$lang);
+    return back();
 });

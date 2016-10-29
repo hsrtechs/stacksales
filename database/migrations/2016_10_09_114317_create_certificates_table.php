@@ -17,7 +17,7 @@ class CreateCertificatesTable extends Migration
             $table->increments('id');
             $table->boolean('gender');
             $table->string('name');
-            $table->integer('id_no');
+            $table->bigInteger('id_no')->unique();
             $table->text('info');
             $table->date('issue');
             $table->date('expiry');

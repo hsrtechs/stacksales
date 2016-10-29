@@ -42,6 +42,10 @@ return [
         'qualification' => 'Qualification',
         'levels' => 'Levels',
         'create' => 'Create',
+        'add' => [
+            'qualification' => 'Add Qualification',
+            'company' => 'Add Company',
+            ],
     ],
 
 ];

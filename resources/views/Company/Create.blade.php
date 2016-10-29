@@ -60,7 +60,8 @@
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-default">@lang('company.create.create')</button>
+                            <button type="button" id="quali-btn" class="btn btn-default">@lang('company.create.add.qualification')</button>
+                            <button type="submit" class="btn btn-primary">@lang('company.create.add.company')</button>
                         </div>
                     </div>
                 </form>
@@ -107,5 +108,10 @@
 
         });
 
+        $('#quali-btn').click(function (e)
+        {
+            e.preventDefault();
+            
+        });
     </script>
 @endsection

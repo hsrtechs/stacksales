@@ -64,7 +64,6 @@
 
                     </ul>
                     @endif
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -92,6 +91,15 @@
                                 </ul>
                             </li>
                         @endif
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Language<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url('lang/cn') }}">CN</a></li>
+                                <li><a href="{{ url('lang/en') }}">EN</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

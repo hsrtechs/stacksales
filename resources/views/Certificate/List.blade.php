@@ -6,7 +6,6 @@
                 证书
             </h2>
             @include('partials.certificates-list',['certificates' => $certificates])
-            @include('partials.certificates-import')
         </div>
     </div>
 @endsection

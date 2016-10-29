@@ -9,7 +9,7 @@
                         Import Data
                     </div>
                     <div class="modal-body">
-                        <form class="form" id="#import" enctype="multipart/form-data" method="POST" action="{{ route('Certificate.upload',csrf_token()) }}">
+                        <form class="form" id="#import" enctype="multipart/form-data" method="POST" action="{{ route('Certificate.upload',[$company->id,csrf_token()]) }}">
                             <div class="form-group">
                                 <input type="file" name="uploadFile" required>
                             </div>
@@ -19,7 +19,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" form="#import">Download</button>
+                        <button type="submit" class="btn btn-primary" form="#import">Upload</button>
                     </div>
                 </div>
             </div>
@@ -34,6 +34,7 @@
                         <form class="form" id="#export" method="get" action="{{ route('Certificate.download',csrf_token()) }}" target="_blank">
                             <div class="form-group">
                                 <select name="type" class="form-control">
+                                    <option value="xlsx">Excel/xlsx</option>
                                     <option value="xls">Excel/xls</option>
                                     <option value="csv">Excel/csv</option>
                                 </select>

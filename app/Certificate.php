@@ -12,19 +12,16 @@ class Certificate extends Model
     protected $appends = ['in'];
 
     protected $fillable = ['id_no'];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','issue','expiry','renewal','dob'];
 
     protected $casts = [
-        'issue' => 'date',
-        'expiry' => 'date',
-        'renewal' => 'date',
-        'dob' => 'date',
         'status' => 'boolean',
         'gender' => 'boolean',
     ];
 
     public function getInAttribute()
     {
+        return $this->id_no;
         return  str_pad($this->id,4,'0',STR_PAD_LEFT);
     }
 
@@ -87,6 +84,8 @@ class Certificate extends Model
     {
         return $query->join('certificate_levels','certificates.certificate_level_id','=','certificate_levels.id')
             ->join('certificate_names','certificate_names.id','certificate_levels.certificate_name_id')
-            ->select('certificates.*','certificate_names.name as role','certificate_levels.name as level');
+            ->select('certificates.*','certificate_names.name as role','certificate_levels.name as level',
+                'certificate_levels.id as level_id','certificate_names.id as role_id',
+                'certificate_names.certificate_category_id as category_id');
     }
 }

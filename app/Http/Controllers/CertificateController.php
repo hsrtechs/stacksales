@@ -70,7 +70,7 @@ class CertificateController extends Controller
         $cert->expiry = $request->expiry;
         $cert->dob = $request->dob;
         $cert->status = true;
-        $cert->status = $request->gender == 'Male' ? true : false;
+        $cert->gender = $request->gender == 'Male' ? true : false;
         $cert->company_id = $request->company_id;
         $cert->renewal = $request->renew;
 
@@ -102,9 +102,12 @@ class CertificateController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(Certificate $Certificate)
+    public function edit($id)
     {
-        return view("Certificate.Edit",['certificate' => $Certificate ?: NULL]);
+        $certificate = Certificate::where('certificates.id',$id)->includeRole()->first();
+        if(count($certificate) < 1)
+            abort(404);
+        return view("Certificate.Edit",['certificate' => $certificate ?: NULL]);
     }
 
     /**

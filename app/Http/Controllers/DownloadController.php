@@ -29,11 +29,9 @@ class DownloadController extends Controller
                     ->setCompany(trans('app.name'))
                     ->sheet('Certificates',function ($sheet) use ($request){
                         $data = json_decode(urldecode($request->data),true);
-
-                        $keys = array_keys($data[0]);
-                        $d = [[
-                            'Name','Gender','DoB','ID Card No.','Issue Date','Expiry Date','Renewal Date','Certificate','Info'
-                        ]];
+                        $sheet->row(1,[
+                            'Name','Gender','DoB','ID Card No','Issue Date','Expiry Date','Renewal Date','Certificate','Info'
+                        ]);
                         foreach ($data as $da)
                         {
                             $array = [
@@ -44,12 +42,12 @@ class DownloadController extends Controller
                                 $da['issue'],
                                 $da['expiry'],
                                 $da['renewal'],
-                                $da['role'],
+                                $da['level'],
                                 $da['info'],
                             ];
-                            array_push($d,$array);
+                            $sheet->appendRow($array);
                         }
-                        $sheet->fromArray($d);
+
                     });
             })->export($ext);
         }else
@@ -59,7 +57,7 @@ class DownloadController extends Controller
     public function AllowedExt()
     {
         return [
-            'csv','xls'
+            'csv','xls','xlsx'
         ];
     }
 

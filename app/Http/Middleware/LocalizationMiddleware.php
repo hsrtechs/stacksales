@@ -30,7 +30,7 @@ class LocalizationMiddleware
             }
             if($details->country == 'cn')
             {
-                $request->session()->put(['local' => 'cn']);
+                $request->session()->put('local', 'cn');
                 App::setLocale('cn');
             }
         }

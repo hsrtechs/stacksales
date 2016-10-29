@@ -23,7 +23,7 @@
                         <div class="col-sm-8">
                             <select name="category_id" class="form-control" id="cat">
                                 @foreach(DB::table('certificate_categories')->get() as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}"{{ $certificate->category_id != $category->id ?: ' selected' }}>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,8 +33,8 @@
                         <label for="role" class="col-sm-4 control-label">Role</label>
                         <div class="col-sm-8">
                             <select name="role" class="form-control" id="role">
-                                @foreach(DB::table('certificate_names')->where('certificate_category_id',1)->get() as $name)
-                                    <option value="{{ $name->id }}">{{ $name->name }}</option>
+                                @foreach(DB::table('certificate_names')->where('certificate_category_id',$certificate->category_id)->get() as $name)
+                                    <option value="{{ $name->id }}"{{ $certificate->role_id != $name->id ?: ' selected' }}>{{ $name->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,8 +45,8 @@
                         <label for="level" class="col-sm-4 control-label">Certificate</label>
                         <div class="col-sm-8">
                             <select name="level" class="form-control" id="level">
-                                @foreach(DB::table('certificate_levels')->where('certificate_name_id',1)->get() as $level)
-                                    <option value="{{ $level->id }}">{{ $level->name }}</option>
+                                @foreach(DB::table('certificate_levels')->where('certificate_name_id',$certificate->role_id)->get() as $level)
+                                    <option value="{{ $level->id }}"{{ $certificate->level_id != $level->id ?: ' selected' }}>{{ $level->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -93,4 +93,36 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('js')
+    <script>
+        $("#cat").change(function () {
+            var id = $("#cat option:selected").val();
+            $.post("{{ url('/Certificate/Roles') }}/" + id, {
+                '_token': '{{ csrf_token() }}',
+            }, function (data, status) {
+                $("#role option").remove();
+                $.each(data, function (key, value) {
+                    console.log(value);
+                    $('#role').append($("<option></option>").attr("value", value.id).text(value.name));
+                });
+            });
+        });
+
+        $("#role").change(function () {
+            var id = $("#role option:selected").val();
+            $.post("{{ url('/Certificate/Level') }}/"+id,{
+                '_token' : '{{ csrf_token() }}',
+            },function  (data, status){
+                $("#level option").remove();
+                $.each(data, function (key, value) {
+                    console.log(value);
+                    $('#level').append($("<option></option>").attr("value", value.id).text(value.name));
+                });
+            });
+
+        });
+    </script>
 @endsection
