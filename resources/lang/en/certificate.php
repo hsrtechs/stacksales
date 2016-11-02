@@ -17,11 +17,15 @@ return [
 
     '_in' => 'IN',
 
+    'create' => 'Create',
+
     'head' => [
         'role' => 'Role',
         'name' => 'Name',
         'status' => 'Status',
     ],
+
+    'add' => 'Add a new Certificate',
 
     'added' => "Certificate Added",
 
@@ -35,6 +39,17 @@ return [
 
     'renewal' => [
         'date' => 'Renewal Date',
+    ],
+
+    'form' => [
+        'name' => 'Name',
+        'gender' => 'Gender',
+        'dob' => 'DOB',
+        'identification' => 'Identification',
+        'category' => 'Category',
+        'role' => 'Role',
+        'certificate' => 'Certificate',
+        'info' => 'Info',
     ],
 
 ];

@@ -16,6 +16,9 @@ return [
     'certificate' => [
         'create' => 'Create Certificate',
         'list' => 'List Certificates',
+        'all' => 'All Certificates',
+        'renewal' => 'Renewable Certificates',
+        'canceled' => 'Canceled Certificate',
     ],
     'company' => [
         'create' => 'Create Company',

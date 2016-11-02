@@ -20,8 +20,8 @@
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
-    'csrfToken' => csrf_token(),
-]); ?>
+            'csrfToken' => csrf_token(),
+                ]); ?>
     </script>
 </head>
 <body>
@@ -56,9 +56,9 @@
                                 @lang('nav.certificate.list')<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ route("Certificate.index") }}">All Certificates</a></li>
-                                <li><a href="{{ route("Certificate.index.var",'renewal') }}">Renewable Certificates</a></li>
-                                <li><a href="{{ route("Certificate.index.var",'expired') }}">Canceled Certificate</a></li>
+                                <li><a href="{{ route("Certificate.index") }}">@lang('nav.certificate.all')</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'renewal') }}">@lang('nav.certificate.renewal)</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'expired') }}">@lang('nav.certificate.canceled)</a></li>
                             </ul>
                         </li>
 

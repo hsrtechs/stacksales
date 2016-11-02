@@ -16,6 +16,9 @@ return [
     'certificate' => [
         'create' => '创建公司',
         'list' => '公司列表',
+        'all' => '全部证件',
+        'renewal' => '即将年检',
+        'canceled' => '过期证件',
     ],
     'company' => [
         'create' => '創建證書',
