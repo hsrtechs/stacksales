@@ -108,10 +108,21 @@
 
         });
 
+        var qualifications = new Array();
         $('#quali-btn').click(function (e)
         {
             e.preventDefault();
-            
+            var data = new Array();
+            data.cat = $("#cat option:selected").val();
+            data.qualification = $("#qualification option:selected").val();
+            data.levels = new Array();
+
+            $("#level :selected").each(function(i, selected){
+                data.levels[i] = $(selected).val();
+            });
+
+            qualifications.push(data);
+            console.log(qualifications);
         });
     </script>
 @endsection

@@ -57,8 +57,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route("Certificate.index") }}">@lang('nav.certificate.all')</a></li>
-                                <li><a href="{{ route("Certificate.index.var",'renewal') }}">@lang('nav.certificate.renewal)</a></li>
-                                <li><a href="{{ route("Certificate.index.var",'expired') }}">@lang('nav.certificate.canceled)</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'renewal') }}">@lang('nav.certificate.renewal')</a></li>
+                                <li><a href="{{ route("Certificate.index.var",'expired') }}">@lang('nav.certificate.canceled')</a></li>
                             </ul>
                         </li>
 
